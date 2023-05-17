@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index",
     "dev": "nodemon src/index",
-    "hw": "node src/hw"
+    "hw": "nodemon hw/index"
   },
   "keywords": [],
   "author": "",
