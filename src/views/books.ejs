@@ -17,12 +17,12 @@
     <tbody>
       <% for (const book of model) { %>
         <tr>
-          <td><%= book.Title %></td>
-          <td><%= book.Author %></td>
-          <td><%= book.Comments %></td>
+          <td><%= book.title %></td>
+          <td><%= book.author %></td>
+          <td><%= book.comments %></td>
           <td class="d-print-none">
-            <a class="btn btn-sm btn-warning" href="/books/edit/<%= book.Book_ID %>">Edit</a>
-            <form action="/books/delete/<%= book.Book_ID %>?_method=DELETE" method="POST">
+            <a class="btn btn-sm btn-warning" href="/books/edit/<%= book._id %>">Edit</a>
+            <form action="/books/delete/<%= book._id %>?_method=DELETE" method="POST">
               <button class="btn btn-sm btn-danger" type="submit">Delete</button>
             </form>
           </td>

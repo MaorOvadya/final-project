@@ -2,7 +2,7 @@ const Book = require("../model/book.model");
 
 exports.getAllBooks = (req, res) => {
   Book.find()
-    .then((rows) => {
+    .then(({rows}) => {
       res.render("books", { model: rows });
     })
     .catch((err) => console.error(err.message));
@@ -27,7 +27,7 @@ exports.postCreateBook = (req, res) => {
 exports.getEditBookById = (req, res) => {
   const id = req.params.id;
   Book.findById(id)
-    .then((rows) => {
+    .then(({rows}) => {
       res.render("edit", { model: rows[0] });
     })
     .catch((err) => console.error(err.message));

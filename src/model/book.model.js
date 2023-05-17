@@ -1,38 +1,40 @@
-// const db = require("../util/sqlite");
-const db = require("../util/mysql")
+// const db = require("../service/sqlite");
+// const db = require("../service/mysql")
+// const db = require("../service/postgres")
+
+const { mongoConnect, ObjectId } = require("../service/mongodb")
+const db = mongoConnect()
 
 module.exports = class Book {
-  constructor(Title, Author, Comments) {
-    this.Title = Title;
-    this.Author = Author;
-    this.Comments = Comments;
+  constructor(title, author, comments) {
+    this.title = title;
+    this.author = author;
+    this.comments = comments;
   }
 
-  save() {
-    const sql = "INSERT INTO Books (Title, Author, Comments) VALUES (?, ?, ?)";
-    const params = [this.Title, this.Author, this.Comments];
-    return db.execute(sql, params)
+  async save() {
+    return (await db).collection("books").insertOne(this)
   }
 
-  static find() {
-    const sql = "SELECT * FROM Books ORDER BY Book_ID DESC";
-    return db.query(sql)
+  static async find() {
+    return (await db).collection("books").find().toArray()
   }
 
-  static findById(id) {
-    const sql = "SELECT * FROM Books WHERE Book_ID = ?";
-    return db.execute(sql, [id])
+  static async findById(id) {
+    return (await db).collection("books").find({ _id: new ObjectId(id) }).toArray()
   }
 
-  static updateOne(data) {
-    const sql =
-      "UPDATE Books SET Title = ?, Author = ?, Comments = ? WHERE (Book_ID = ?)";
-    const params = [data.Title, data.Author, data.Comments, data.id];
-    return db.execute(sql, params)
+  static async updateOne(data) {
+    return (await db).collection("books").updateOne(
+      { _id: new ObjectId(data.id) }, //filter
+      { $set: { title: data.title, author: data.author, comments: data.comments } }) //update
   }
 
-  static deleteOne(id) {
-    const sql = "DELETE FROM Books WHERE Book_ID = ?";
-    return db.execute(sql, [id])
+  static async deleteOne(id) {
+    return (await db).collection("books").deleteOne({ _id: new ObjectId(id) })
   }
 };
+
+
+//Schema ---> Table ----> Row
+//Schema/DB ---> Collection ----> Document
