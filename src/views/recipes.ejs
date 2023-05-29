@@ -1,0 +1,79 @@
+<%- include("_header") -%>
+
+<h1 style="padding: 1rem">Amount of recipes <%= model.length %></h1>
+<% for (const recipe of model) { %>
+<div>
+  <div
+    style="
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      border: 2px solid black;
+      text-align: left;
+      width: 40rem;
+      justify-items: end;
+    ">
+    <div style="padding-left: 10px; padding-top: 20px; padding-bottom: 20px">
+      <div>
+        <h3 style="padding: 10px 20px">recipe</h3>
+        <p style="padding: 0 30px 0"><%= recipe.recipe %></p>
+      </div>
+
+      <div>
+        <!-- <img src="/media/cc0-images/grapefruit-slice-332-332.jpg" /> -->
+      </div>
+      <div>
+        <h3 style="padding: 10px 20px">ingredients</h3>
+        <p style="padding: 0 30px 0"><%= recipe.ingredients %></p>
+      </div>
+      <div>
+        <h3 style="padding: 10px 20px">preparation</h3>
+        <p style="padding: 0 30px 0"><%= recipe.preparation %></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  style="
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    margin: 20px 0;
+  ">
+  <button style="border: none; background-color: rgb(215, 215, 215)">
+    <a
+      style="
+        padding-right: 30px;
+        padding-left: 30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-size: 12px;
+        color: black;
+
+        letter-spacing: 1px;
+        text-decoration: none;
+      "
+      href="/recipes/edit/<%= recipe._id %>"
+      >Edit</a
+    >
+  </button>
+
+  <form action="/recipes/delete/<%= recipe._id %>?_method=DELETE" method="POST">
+    <button
+      style="
+        border: none;
+        background-color: rgb(215, 215, 215);
+        padding-right: 30px;
+        padding-left: 30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-size: 12px;
+      "
+      type="submit">
+      Delete
+    </button>
+  </form>
+</div>
+<% } %> <%- include("_footer") -%>
